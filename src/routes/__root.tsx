@@ -6,8 +6,18 @@ import {
 	HeadContent,
 	Scripts,
 } from '@tanstack/react-router'
+import { getLocationId } from '@/actions/getLocationId'
+
+import appCss from "@/styles/app.css?url"
+import { getItemId } from '@/actions/getItemId'
 
 export const Route = createRootRoute({
+	loader: async () => {
+		const locationId = await getLocationId();
+		const itemId = await getItemId();
+
+		return { locationId, itemId }
+	},
 	head: () => ({
 		meta: [
 			{
@@ -18,7 +28,13 @@ export const Route = createRootRoute({
 				content: 'width=device-width, initial-scale=1',
 			},
 			{
-				title: 'TanStack Start Starter',
+				title: 'Phoenix Comedy Underground',
+			},
+		],
+		links: [
+			{
+				rel: "stylesheet",
+				href: appCss,
 			},
 		],
 	}),
